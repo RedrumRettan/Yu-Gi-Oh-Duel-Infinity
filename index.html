@@ -379,7 +379,7 @@
       <button type="button" data-screen="home" data-active="true">Start Duel</button>
       <button type="button" data-screen="deckbuilder">Deck Builder</button>
       <button type="button" data-screen="collection">Collection</button>
-      <button type="button" data-screen="home">Settings</button>
+      <button type="button" data-screen="settings">Settings</button>
       <button type="button" data-screen="credits">Credits</button>
     </nav>
 
@@ -498,6 +498,27 @@
       </div>
     </section>
 
+    <section id="screen-settings" class="screen" data-screen="settings" aria-label="Settings screen">
+      <section class="panel" aria-label="Settings controls">
+        <h2>Settings</h2>
+
+        <div class="field">
+          <label for="musicEnabled">Main Menu Music</label>
+          <select id="musicEnabled">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="musicVolume">Music Volume</label>
+          <input id="musicVolume" type="range" min="0" max="100" step="1" value="35" />
+        </div>
+
+        <p id="settingsStatus" class="status">Settings ready.</p>
+      </section>
+    </section>
+
     <section id="screen-credits" class="screen" data-screen="credits" aria-label="Credits screen">
       <section class="panel" aria-label="Credits list">
         <h2>Credits</h2>
@@ -523,6 +544,9 @@
     const zipUpload = document.getElementById('zipUpload');
     const backUpload = document.getElementById('backUpload');
     const mainMenuMusic = document.getElementById('mainMenuMusic');
+    const musicEnabledSelect = document.getElementById('musicEnabled');
+    const musicVolumeRange = document.getElementById('musicVolume');
+    const settingsStatus = document.getElementById('settingsStatus');
 
     const deckCardSelect = document.getElementById('deckCardSelect');
     const deckStatus = document.getElementById('deckStatus');
@@ -542,6 +566,10 @@
       deck: {
         main: [],
         extra: [],
+      },
+      settings: {
+        musicEnabled: true,
+        musicVolume: 0.35,
       },
     };
 
@@ -911,11 +939,44 @@
       addDeckCard('extra', card);
     });
 
+    function saveSettings() {
+      localStorage.setItem('duelInfinitySettings', JSON.stringify(state.settings));
+    }
+
+    function loadSettings() {
+      try {
+        const raw = localStorage.getItem('duelInfinitySettings');
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        state.settings.musicEnabled = parsed.musicEnabled !== false;
+        if (typeof parsed.musicVolume === 'number') {
+          state.settings.musicVolume = Math.max(0, Math.min(1, parsed.musicVolume));
+        }
+      } catch {
+        // ignore invalid settings cache
+      }
+    }
+
+    function applyMusicSettings() {
+      if (!mainMenuMusic) return;
+      mainMenuMusic.volume = state.settings.musicVolume;
+      musicEnabledSelect.value = state.settings.musicEnabled ? 'on' : 'off';
+      musicVolumeRange.value = String(Math.round(state.settings.musicVolume * 100));
+
+      if (!state.settings.musicEnabled) {
+        mainMenuMusic.pause();
+      }
+    }
+
+    function setSettingsStatus(message, isError = false) {
+      setStatus(settingsStatus, message, isError);
+    }
+
     const musicUnlockEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
 
     const tryStartMusic = async () => {
-      if (!mainMenuMusic) return false;
-      mainMenuMusic.volume = 0.35;
+      if (!mainMenuMusic || !state.settings.musicEnabled) return false;
+      mainMenuMusic.volume = state.settings.musicVolume;
 
       try {
         await mainMenuMusic.play();
@@ -935,6 +996,26 @@
     // Attempt once on load; mobile browsers may still require first user interaction.
     tryStartMusic();
 
+    musicEnabledSelect.addEventListener('change', async () => {
+      state.settings.musicEnabled = musicEnabledSelect.value === 'on';
+      saveSettings();
+
+      if (state.settings.musicEnabled) {
+        await tryStartMusic();
+        setSettingsStatus('Music enabled.');
+      } else if (mainMenuMusic) {
+        mainMenuMusic.pause();
+        setSettingsStatus('Music disabled.');
+      }
+    });
+
+    musicVolumeRange.addEventListener('input', () => {
+      state.settings.musicVolume = Number(musicVolumeRange.value) / 100;
+      if (mainMenuMusic) mainMenuMusic.volume = state.settings.musicVolume;
+      saveSettings();
+      setSettingsStatus(`Volume: ${musicVolumeRange.value}%`);
+    });
+
     menuButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const targetScreen = button.dataset.screen;
@@ -948,6 +1029,9 @@
         activateScreen(targetScreen);
       });
     });
+
+    loadSettings();
+    applyMusicSettings();
 
     loadDefaults();
     renderCharacters();
