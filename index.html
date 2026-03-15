@@ -477,16 +477,6 @@
             <button id="addToExtra" class="action" type="button">Add to Extra</button>
           </div>
 
-          <div class="field">
-            <label for="deckCustomName">Or Add Custom Card Name</label>
-            <input id="deckCustomName" type="text" placeholder="Ex: Blue-Eyes White Dragon" maxlength="80" />
-          </div>
-
-          <div class="deck-actions-row">
-            <button id="addCustomMain" class="action" type="button">Custom to Main</button>
-            <button id="addCustomExtra" class="action" type="button">Custom to Extra</button>
-          </div>
-
           <p id="deckStatus" class="status">Deck Builder ready.</p>
         </section>
 
@@ -921,20 +911,6 @@
       addDeckCard('extra', card);
     });
 
-    function addCustomCard(target) {
-      const nameInput = document.getElementById('deckCustomName');
-      const label = nameInput.value.trim();
-      if (!label) {
-        setDeckStatus('Enter a custom card name before adding.', true);
-        return;
-      }
-      addDeckCard(target, { label, src: DEFAULTS.front });
-      nameInput.value = '';
-    }
-
-    document.getElementById('addCustomMain').addEventListener('click', () => addCustomCard('main'));
-    document.getElementById('addCustomExtra').addEventListener('click', () => addCustomCard('extra'));
-
     const tryStartMusic = () => {
       if (!mainMenuMusic) return;
       mainMenuMusic.volume = 0.35;
@@ -951,7 +927,7 @@
         const targetScreen = button.dataset.screen;
         const isTargetOpen = document.querySelector(`.screen[data-screen="${targetScreen}"]`)?.dataset.active === 'true';
 
-        if (targetScreen === 'collection' && isTargetOpen) {
+        if (targetScreen !== 'home' && isTargetOpen) {
           activateScreen('home');
           return;
         }
