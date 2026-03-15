@@ -278,6 +278,80 @@
 
     .status.error { color: var(--danger); }
 
+    .field select {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(180, 214, 255, .44);
+      background: rgba(0, 0, 0, .22);
+      color: var(--text);
+      padding: 8px 10px;
+    }
+
+    .deck-layout { align-items: stretch; }
+
+    .deck-actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .deck-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .deck-columns h3 {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .deck-list {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, .18);
+      padding: 8px;
+      min-height: 120px;
+      max-height: 320px;
+      overflow: auto;
+      display: grid;
+      gap: 8px;
+    }
+
+    .deck-item {
+      border: 1px solid rgba(180, 214, 255, .35);
+      border-radius: 8px;
+      padding: 6px;
+      background: rgba(11, 22, 55, .8);
+      display: grid;
+      gap: 6px;
+    }
+
+    .deck-item strong { overflow-wrap: anywhere; }
+
+    .deck-item-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .mini {
+      min-height: 34px;
+      font-size: .74rem;
+      padding: 6px;
+      text-transform: uppercase;
+      border-radius: 8px;
+      border: 1px solid rgba(194, 222, 255, 0.45);
+      background: var(--btn);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .mini:hover { background: var(--btn-hover); }
+
     @media (max-width: 900px) {
       .split { grid-template-columns: 1fr; }
       .character-list { max-height: 260px; }
@@ -287,6 +361,8 @@
       .menu { grid-template-columns: 1fr; }
       .card-tools { grid-template-columns: 1fr; }
       .anim-grid { grid-template-columns: 1fr; }
+      .deck-actions-row { grid-template-columns: 1fr; }
+      .deck-columns { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -301,7 +377,7 @@
 
     <nav class="menu" aria-label="Main menu">
       <button type="button" data-screen="home" data-active="true">Start Duel</button>
-      <button type="button" data-screen="home">Deck Builder</button>
+      <button type="button" data-screen="deckbuilder">Deck Builder</button>
       <button type="button" data-screen="collection">Collection</button>
       <button type="button" data-screen="home">Settings</button>
       <button type="button" data-screen="credits">Credits</button>
@@ -385,6 +461,53 @@
       </div>
     </section>
 
+    <section id="screen-deckbuilder" class="screen" data-screen="deckbuilder" aria-label="Deck Builder screen">
+      <div class="split deck-layout">
+        <section class="panel" aria-label="Deck builder controls">
+          <h2>Deck Builder (Speed Duel)</h2>
+          <p class="hint">Main Deck rule: <strong>20–40 cards</strong>. Infinite copies are allowed. You can place any card into Main or Extra Deck freely.</p>
+
+          <div class="field">
+            <label for="deckCardSelect">Choose Card From Collection</label>
+            <select id="deckCardSelect"></select>
+          </div>
+
+          <div class="deck-actions-row">
+            <button id="addToMain" class="action" type="button">Add to Main</button>
+            <button id="addToExtra" class="action" type="button">Add to Extra</button>
+          </div>
+
+          <div class="field">
+            <label for="deckCustomName">Or Add Custom Card Name</label>
+            <input id="deckCustomName" type="text" placeholder="Ex: Blue-Eyes White Dragon" maxlength="80" />
+          </div>
+
+          <div class="deck-actions-row">
+            <button id="addCustomMain" class="action" type="button">Custom to Main</button>
+            <button id="addCustomExtra" class="action" type="button">Custom to Extra</button>
+          </div>
+
+          <p id="deckStatus" class="status">Deck Builder ready.</p>
+        </section>
+
+        <section class="panel" aria-label="Current deck list">
+          <h2>Current Deck</h2>
+          <p id="deckCounts" class="hint">Main: 0 / 20-40 • Extra: 0</p>
+
+          <div class="deck-columns">
+            <div>
+              <h3>Main Deck</h3>
+              <div id="mainDeckList" class="deck-list"></div>
+            </div>
+            <div>
+              <h3>Extra Deck</h3>
+              <div id="extraDeckList" class="deck-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
     <section id="screen-credits" class="screen" data-screen="credits" aria-label="Credits screen">
       <section class="panel" aria-label="Credits list">
         <h2>Credits</h2>
@@ -411,6 +534,12 @@
     const backUpload = document.getElementById('backUpload');
     const mainMenuMusic = document.getElementById('mainMenuMusic');
 
+    const deckCardSelect = document.getElementById('deckCardSelect');
+    const deckStatus = document.getElementById('deckStatus');
+    const deckCounts = document.getElementById('deckCounts');
+    const mainDeckList = document.getElementById('mainDeckList');
+    const extraDeckList = document.getElementById('extraDeckList');
+
     const state = {
       fronts: [],
       backs: [],
@@ -419,6 +548,10 @@
         win: null,
         neutral: null,
         loss: null,
+      },
+      deck: {
+        main: [],
+        extra: [],
       },
     };
 
@@ -467,6 +600,106 @@
       backGrid.innerHTML = '';
       state.fronts.forEach((item) => frontGrid.append(createCardTile(item.src, item.label)));
       state.backs.forEach((item) => backGrid.append(createCardTile(item.src, item.label)));
+      renderDeckCardOptions();
+    }
+
+    function setDeckStatus(message, isError = false) {
+      setStatus(deckStatus, message, isError);
+    }
+
+    function renderDeckCardOptions() {
+      if (!deckCardSelect) return;
+      deckCardSelect.innerHTML = '';
+      state.fronts.forEach((card, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = card.label;
+        deckCardSelect.append(option);
+      });
+
+      if (state.fronts.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No card fronts available';
+        deckCardSelect.append(option);
+      }
+    }
+
+    function addDeckCard(target, card) {
+      state.deck[target].push({ ...card });
+      renderDeck();
+    }
+
+    function removeDeckCard(target, index) {
+      state.deck[target].splice(index, 1);
+      renderDeck();
+    }
+
+    function moveDeckCard(source, index) {
+      const [card] = state.deck[source].splice(index, 1);
+      const destination = source === 'main' ? 'extra' : 'main';
+      if (card) state.deck[destination].push(card);
+      renderDeck();
+    }
+
+    function renderDeckList(container, target) {
+      container.innerHTML = '';
+      const cards = state.deck[target];
+      if (cards.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'hint';
+        empty.textContent = 'No cards added.';
+        container.append(empty);
+        return;
+      }
+
+      cards.forEach((card, index) => {
+        const item = document.createElement('article');
+        item.className = 'deck-item';
+
+        const title = document.createElement('strong');
+        title.textContent = `${index + 1}. ${card.label}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'deck-item-actions';
+
+        const duplicateButton = document.createElement('button');
+        duplicateButton.className = 'mini';
+        duplicateButton.type = 'button';
+        duplicateButton.textContent = '+1';
+        duplicateButton.addEventListener('click', () => addDeckCard(target, card));
+
+        const moveButton = document.createElement('button');
+        moveButton.className = 'mini';
+        moveButton.type = 'button';
+        moveButton.textContent = target === 'main' ? 'To Extra' : 'To Main';
+        moveButton.addEventListener('click', () => moveDeckCard(target, index));
+
+        const removeButton = document.createElement('button');
+        removeButton.className = 'mini';
+        removeButton.type = 'button';
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => removeDeckCard(target, index));
+
+        actions.append(duplicateButton, moveButton, removeButton);
+        item.append(title, actions);
+        container.append(item);
+      });
+    }
+
+    function renderDeck() {
+      const mainCount = state.deck.main.length;
+      const extraCount = state.deck.extra.length;
+      deckCounts.textContent = `Main: ${mainCount} / 20-40 • Extra: ${extraCount}`;
+
+      if (mainCount < 20 || mainCount > 40) {
+        setDeckStatus('Main Deck must contain between 20 and 40 cards.', true);
+      } else {
+        setDeckStatus('Deck is valid for your Speed Duel rule set.');
+      }
+
+      renderDeckList(mainDeckList, 'main');
+      renderDeckList(extraDeckList, 'extra');
     }
 
     function addFilesToCollection(files, target) {
@@ -667,6 +900,41 @@
       setStatus(charStatus, `Saved character "${name}".`);
     });
 
+    function getSelectedCollectionCard() {
+      const index = Number(deckCardSelect.value);
+      if (!Number.isInteger(index) || index < 0 || index >= state.fronts.length) {
+        setDeckStatus('Select a valid card from collection first.', true);
+        return null;
+      }
+      return state.fronts[index];
+    }
+
+    document.getElementById('addToMain').addEventListener('click', () => {
+      const card = getSelectedCollectionCard();
+      if (!card) return;
+      addDeckCard('main', card);
+    });
+
+    document.getElementById('addToExtra').addEventListener('click', () => {
+      const card = getSelectedCollectionCard();
+      if (!card) return;
+      addDeckCard('extra', card);
+    });
+
+    function addCustomCard(target) {
+      const nameInput = document.getElementById('deckCustomName');
+      const label = nameInput.value.trim();
+      if (!label) {
+        setDeckStatus('Enter a custom card name before adding.', true);
+        return;
+      }
+      addDeckCard(target, { label, src: DEFAULTS.front });
+      nameInput.value = '';
+    }
+
+    document.getElementById('addCustomMain').addEventListener('click', () => addCustomCard('main'));
+    document.getElementById('addCustomExtra').addEventListener('click', () => addCustomCard('extra'));
+
     const tryStartMusic = () => {
       if (!mainMenuMusic) return;
       mainMenuMusic.volume = 0.35;
@@ -694,6 +962,7 @@
 
     loadDefaults();
     renderCharacters();
+    renderDeck();
     activateScreen('home');
   </script>
 </body>
