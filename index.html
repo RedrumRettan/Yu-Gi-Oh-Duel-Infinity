@@ -302,7 +302,7 @@
       <button type="button" data-screen="home">Deck Builder</button>
       <button type="button" data-screen="collection">Collection</button>
       <button type="button" data-screen="home">Settings</button>
-      <button type="button" data-screen="home">Credits</button>
+      <button type="button" data-screen="credits">Credits</button>
     </nav>
 
     <section id="screen-home" class="screen" data-screen="home" data-active="true" aria-label="Main home screen">
@@ -381,6 +381,15 @@
           <div id="characterList" class="character-list"></div>
         </section>
       </div>
+    </section>
+
+    <section id="screen-credits" class="screen" data-screen="credits" aria-label="Credits screen">
+      <section class="panel" aria-label="Credits list">
+        <h2>Credits</h2>
+        <p class="hint"><strong>You</strong> — Project creator and lead vision for this Yu-Gi-Oh fan game.</p>
+        <p class="hint"><strong>Me (GPT-5.2-Codex)</strong> — UI/implementation support and iteration help.</p>
+        <p class="hint"><strong>Konami</strong> — Original Yu-Gi-Oh IP, card game, and franchise inspiration.</p>
+      </section>
     </section>
   </main>
 
@@ -657,7 +666,15 @@
 
     menuButtons.forEach((button) => {
       button.addEventListener('click', () => {
-        activateScreen(button.dataset.screen);
+        const targetScreen = button.dataset.screen;
+        const isTargetOpen = document.querySelector(`.screen[data-screen="${targetScreen}"]`)?.dataset.active === 'true';
+
+        if (targetScreen === 'collection' && isTargetOpen) {
+          activateScreen('home');
+          return;
+        }
+
+        activateScreen(targetScreen);
       });
     });
 
