@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Hallow</author>
+      <authoring_tool>Blender 2.77.0 commit date:2016-03-18, commit time:12:34, hash:22a2853</authoring_tool>
+    </contributor>
+    <created>2018-01-13T08:28:52</created>
+    <modified>2018-01-13T08:28:52</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="MBB_003846_png" name="MBB_003846_png">
+      <init_from>MBB_003846.png</init_from>
+    </image>
+    <image id="_000_png" name="_000_png">
+      <init_from>0000.png</init_from>
+    </image>
+    <image id="dummyCard_png" name="dummyCard_png">
+      <init_from>dummyCard.png</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="MonsterPlane-effect">
+      <profile_COMMON>
+        <newparam sid="MBB_003846_png-surface">
+          <surface type="2D">
+            <init_from>MBB_003846_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="MBB_003846_png-sampler">
+          <sampler2D>
+            <source>MBB_003846_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="MBB_003846_png-sampler" texcoord="MonsterPlane_001-mesh-map-0"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="CardBack-effect">
+      <profile_COMMON>
+        <newparam sid="_000_png-surface">
+          <surface type="2D">
+            <init_from>_000_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="_000_png-sampler">
+          <sampler2D>
+            <source>_000_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="_000_png-sampler" texcoord="CardModel_back_002-mesh-map-0"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="CardFront-effect">
+      <profile_COMMON>
+        <newparam sid="dummyCard_png-surface">
+          <surface type="2D">
+            <init_from>dummyCard_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="dummyCard_png-sampler">
+          <sampler2D>
+            <source>dummyCard_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="dummyCard_png-sampler" texcoord="CardModel_front_002-mesh-map-0"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="CardModel_white-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">1</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="MonsterPlane-material" name="MonsterPlane">
+      <instance_effect url="#MonsterPlane-effect"/>
+    </material>
+    <material id="CardBack-material" name="CardBack">
+      <instance_effect url="#CardBack-effect"/>
+    </material>
+    <material id="CardFront-material" name="CardFront">
+      <instance_effect url="#CardFront-effect"/>
+    </material>
+    <material id="CardModel_white-material" name="CardModel_white">
+      <instance_effect url="#CardModel_white-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="MonsterPlane_002-mesh" name="MonsterPlane.002">
+      <mesh>
+        <source id="MonsterPlane_002-mesh-positions">
+          <float_array id="MonsterPlane_002-mesh-positions-array" count="21">7.79e-4 0 0.1 -7.79e-4 0 0.1 0 1.25449e-6 -7.7 -3.9 9.83708e-7 0.1 3.9 -2.28707e-6 7.9 3.9 -1.01629e-6 0.1 -3.9 -2.87073e-7 7.9</float_array>
+          <technique_common>
+            <accessor source="#MonsterPlane_002-mesh-positions-array" count="7" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="MonsterPlane_002-mesh-normals">
+          <float_array id="MonsterPlane_002-mesh-normals-array" count="9">0 -1 -1.62921e-7 2.5641e-7 1 1.62921e-7 2.5641e-7 1 1.62921e-7</float_array>
+          <technique_common>
+            <accessor source="#MonsterPlane_002-mesh-normals-array" count="3" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="MonsterPlane_002-mesh-map-0">
+          <float_array id="MonsterPlane_002-mesh-map-0-array" count="18">0 0 0 0 0 0 1 0 0 1 0 0 1 0 1 1 0 1</float_array>
+          <technique_common>
+            <accessor source="#MonsterPlane_002-mesh-map-0-array" count="9" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="MonsterPlane_002-mesh-vertices">
+          <input semantic="POSITION" source="#MonsterPlane_002-mesh-positions"/>
+        </vertices>
+        <polylist material="MonsterPlane-material" count="3">
+          <input semantic="VERTEX" source="#MonsterPlane_002-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#MonsterPlane_002-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#MonsterPlane_002-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 3 1 3 4 1 4 5 1 5 3 2 6 6 2 7 4 2 8</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="CardModel_back_004-mesh" name="CardModel_back.004">
+      <mesh>
+        <source id="CardModel_back_004-mesh-positions">
+          <float_array id="CardModel_back_004-mesh-positions-array" count="12">-2.95 4.3 -0.04999923 2.95 -4.3 -0.0500006 -2.95 -4.3 -0.0500006 2.95 4.3 -0.04999923</float_array>
+          <technique_common>
+            <accessor source="#CardModel_back_004-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_back_004-mesh-normals">
+          <float_array id="CardModel_back_004-mesh-normals-array" count="3">0 1.62873e-7 -1</float_array>
+          <technique_common>
+            <accessor source="#CardModel_back_004-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_back_004-mesh-map-0">
+          <float_array id="CardModel_back_004-mesh-map-0-array" count="12">1 1.00082 0 8.23e-4 1 8.23e-4 1 1.00082 0 1.00082 0 8.23e-4</float_array>
+          <technique_common>
+            <accessor source="#CardModel_back_004-mesh-map-0-array" count="6" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="CardModel_back_004-mesh-vertices">
+          <input semantic="POSITION" source="#CardModel_back_004-mesh-positions"/>
+        </vertices>
+        <polylist material="CardBack-material" count="2">
+          <input semantic="VERTEX" source="#CardModel_back_004-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#CardModel_back_004-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#CardModel_back_004-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 0 0 3 3 0 4 1 0 5</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="CardModel_front_004-mesh" name="CardModel_front.004">
+      <mesh>
+        <source id="CardModel_front_004-mesh-positions">
+          <float_array id="CardModel_front_004-mesh-positions-array" count="12">-2.95 -4.3 0.04999923 2.95 4.3 0.0500006 -2.95 4.3 0.0500006 2.95 -4.3 0.04999923</float_array>
+          <technique_common>
+            <accessor source="#CardModel_front_004-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_front_004-mesh-normals">
+          <float_array id="CardModel_front_004-mesh-normals-array" count="3">0 -1.62873e-7 1</float_array>
+          <technique_common>
+            <accessor source="#CardModel_front_004-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_front_004-mesh-map-0">
+          <float_array id="CardModel_front_004-mesh-map-0-array" count="12">0 0 1 1 0 1 0 0 1 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#CardModel_front_004-mesh-map-0-array" count="6" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="CardModel_front_004-mesh-vertices">
+          <input semantic="POSITION" source="#CardModel_front_004-mesh-positions"/>
+        </vertices>
+        <polylist material="CardFront-material" count="2">
+          <input semantic="VERTEX" source="#CardModel_front_004-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#CardModel_front_004-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#CardModel_front_004-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 0 0 3 3 0 4 1 0 5</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="CardModel_side_008-mesh" name="CardModel_side.008">
+      <mesh>
+        <source id="CardModel_side_008-mesh-positions">
+          <float_array id="CardModel_side_008-mesh-positions-array" count="48">-2.95 -4.3 -0.0500006 2.95 -4.3 0.04999923 -2.95 -4.3 0.04999923 2.95 -4.3 -0.0500006 -2.95 4.3 0.0500006 2.95 4.3 -0.04999923 -2.95 4.3 -0.04999923 2.95 4.3 0.0500006 2.95 -4.3 -0.0500006 2.95 4.3 0.0500006 2.95 -4.3 0.04999923 2.95 4.3 -0.04999923 -2.95 4.3 -0.04999923 -2.95 -4.3 0.04999923 -2.95 4.3 0.0500006 -2.95 -4.3 -0.0500006</float_array>
+          <technique_common>
+            <accessor source="#CardModel_side_008-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_side_008-mesh-normals">
+          <float_array id="CardModel_side_008-mesh-normals-array" count="18">0 -1 0 0 1 0 1 0 0 1 0 0 -1 0 0 -1 0 0</float_array>
+          <technique_common>
+            <accessor source="#CardModel_side_008-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="CardModel_side_008-mesh-map-0">
+          <float_array id="CardModel_side_008-mesh-map-0-array" count="48">0.005705893 0.005929887 0.03432291 0.03187495 0.005705893 0.03187495 0.005705893 0.005929887 0.03432291 0.005929887 0.03432291 0.03187495 0.03432291 0.03187495 0.005705893 0.005929887 0.03432291 0.005929887 0.03432291 0.03187495 0.005705893 0.03187495 0.005705893 0.005929887 0.005705893 0.005929887 0.03432291 0.03187495 0.005705893 0.03187495 0.005705893 0.005929887 0.03432291 0.005929887 0.03432291 0.03187495 0.005705893 0.005929887 0.03432291 0.03187495 0.005705893 0.03187495 0.005705893 0.005929887 0.03432291 0.005929887 0.03432291 0.03187495</float_array>
+          <technique_common>
+            <accessor source="#CardModel_side_008-mesh-map-0-array" count="24" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="CardModel_side_008-mesh-vertices">
+          <input semantic="POSITION" source="#CardModel_side_008-mesh-positions"/>
+        </vertices>
+        <polylist material="CardModel_white-material" count="8">
+          <input semantic="VERTEX" source="#CardModel_side_008-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#CardModel_side_008-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#CardModel_side_008-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 0 0 3 3 0 4 1 0 5 4 1 6 5 1 7 6 1 8 4 1 9 7 1 10 5 1 11 8 2 12 9 2 13 10 2 14 8 3 15 11 3 16 9 3 17 12 4 18 13 4 19 14 4 20 12 5 21 15 5 22 13 5 23</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_MonsterPlane-skin" name="Armature">
+      <skin source="#MonsterPlane_002-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_MonsterPlane-skin-joints">
+          <Name_array id="Armature_MonsterPlane-skin-joints-array" count="8">MonsterPlane CardModel_back CardModel_front CardModel_side CardMonster CardModel CardModelWrapper CardPlane</Name_array>
+          <technique_common>
+            <accessor source="#Armature_MonsterPlane-skin-joints-array" count="8" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_MonsterPlane-skin-bind_poses">
+          <float_array id="Armature_MonsterPlane-skin-bind_poses-array" count="128">-1 -1.50996e-7 0 0 0 -2.38419e-7 1 -0.1 -1.50996e-7 1 1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 -0.1 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_MonsterPlane-skin-bind_poses-array" count="8" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_MonsterPlane-skin-weights">
+          <float_array id="Armature_MonsterPlane-skin-weights-array" count="7">1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_MonsterPlane-skin-weights-array" count="7" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_MonsterPlane-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_MonsterPlane-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="7">
+          <input semantic="JOINT" source="#Armature_MonsterPlane-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_MonsterPlane-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 1 0 2 0 3 0 4 0 5 0 6</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_CardModel_back-skin" name="Armature">
+      <skin source="#CardModel_back_004-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_CardModel_back-skin-joints">
+          <Name_array id="Armature_CardModel_back-skin-joints-array" count="8">MonsterPlane CardModel_back CardModel_front CardModel_side CardMonster CardModel CardModelWrapper CardPlane</Name_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_back-skin-joints-array" count="8" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_back-skin-bind_poses">
+          <float_array id="Armature_CardModel_back-skin-bind_poses-array" count="128">-1 -1.50996e-7 0 0 0 -2.38419e-7 1 -0.1 -1.50996e-7 1 1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 -0.1 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_back-skin-bind_poses-array" count="8" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_back-skin-weights">
+          <float_array id="Armature_CardModel_back-skin-weights-array" count="4">1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_back-skin-weights-array" count="4" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_CardModel_back-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_CardModel_back-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#Armature_CardModel_back-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_CardModel_back-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 </vcount>
+          <v>1 0 1 1 1 2 1 3</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_CardModel_front-skin" name="Armature">
+      <skin source="#CardModel_front_004-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_CardModel_front-skin-joints">
+          <Name_array id="Armature_CardModel_front-skin-joints-array" count="8">MonsterPlane CardModel_back CardModel_front CardModel_side CardMonster CardModel CardModelWrapper CardPlane</Name_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_front-skin-joints-array" count="8" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_front-skin-bind_poses">
+          <float_array id="Armature_CardModel_front-skin-bind_poses-array" count="128">-1 -1.50996e-7 0 0 0 -2.38419e-7 1 -0.1 -1.50996e-7 1 1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 -0.1 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_front-skin-bind_poses-array" count="8" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_front-skin-weights">
+          <float_array id="Armature_CardModel_front-skin-weights-array" count="4">1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_front-skin-weights-array" count="4" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_CardModel_front-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_CardModel_front-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#Armature_CardModel_front-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_CardModel_front-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 </vcount>
+          <v>2 0 2 1 2 2 2 3</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_CardModel_side-skin" name="Armature">
+      <skin source="#CardModel_side_008-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_CardModel_side-skin-joints">
+          <Name_array id="Armature_CardModel_side-skin-joints-array" count="8">MonsterPlane CardModel_back CardModel_front CardModel_side CardMonster CardModel CardModelWrapper CardPlane</Name_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_side-skin-joints-array" count="8" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_side-skin-bind_poses">
+          <float_array id="Armature_CardModel_side-skin-bind_poses-array" count="128">-1 -1.50996e-7 0 0 0 -2.38419e-7 1 -0.1 -1.50996e-7 1 1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 -0.1 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1 1 0 0 0 0 -2.38419e-7 1 0 0 -1 -1.62921e-7 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_side-skin-bind_poses-array" count="8" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_CardModel_side-skin-weights">
+          <float_array id="Armature_CardModel_side-skin-weights-array" count="16">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_CardModel_side-skin-weights-array" count="16" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_CardModel_side-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_CardModel_side-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="16">
+          <input semantic="JOINT" source="#Armature_CardModel_side-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_CardModel_side-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>3 0 3 1 3 2 3 3 3 4 3 5 3 6 3 7 3 8 3 9 3 10 3 11 3 12 3 13 3 14 3 15</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Default" name="Default">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="CardModelWrapper" name="CardModelWrapper" sid="CardModelWrapper" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 -1.62921e-7 -1 0 0 1 -2.38419e-7 0 0 0 0 1</matrix>
+          <node id="CardMonster" name="CardMonster" sid="CardMonster" type="JOINT">
+            <matrix sid="transform">1 0 0 0 0 1 0 0.1 0 0 1 0 0 0 0 1</matrix>
+            <node id="MonsterPlane" name="MonsterPlane" sid="MonsterPlane" type="JOINT">
+              <matrix sid="transform">-1 2.46004e-14 -1.50996e-7 2.46004e-15 2.46004e-14 1 0 0 1.50996e-7 0 -1 0 0 0 0 1</matrix>
+            </node>
+          </node>
+          <node id="CardPlane" name="CardPlane" sid="CardPlane" type="JOINT">
+            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <node id="CardModel" name="CardModel" sid="CardModel" type="JOINT">
+              <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+              <node id="CardModel_back" name="CardModel_back" sid="CardModel_back" type="JOINT">
+                <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+              </node>
+              <node id="CardModel_front" name="CardModel_front" sid="CardModel_front" type="JOINT">
+                <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+              </node>
+              <node id="CardModel_side" name="CardModel_side" sid="CardModel_side" type="JOINT">
+                <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node id="MonsterPlane" name="MonsterPlane" type="NODE">
+        <translate sid="location">0 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_controller url="#Armature_MonsterPlane-skin">
+          <skeleton>#CardModelWrapper</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="MonsterPlane-material" target="#MonsterPlane-material">
+                <bind_vertex_input semantic="MonsterPlane_001-mesh-map-0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="CardModel_back" name="CardModel_back" type="NODE">
+        <translate sid="location">0 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_controller url="#Armature_CardModel_back-skin">
+          <skeleton>#CardModelWrapper</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="CardBack-material" target="#CardBack-material">
+                <bind_vertex_input semantic="CardModel_back_002-mesh-map-0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="CardModel_front" name="CardModel_front" type="NODE">
+        <translate sid="location">0 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_controller url="#Armature_CardModel_front-skin">
+          <skeleton>#CardModelWrapper</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="CardFront-material" target="#CardFront-material">
+                <bind_vertex_input semantic="CardModel_front_002-mesh-map-0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="CardModel_side" name="CardModel_side" type="NODE">
+        <translate sid="location">0 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_controller url="#Armature_CardModel_side-skin">
+          <skeleton>#CardModelWrapper</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="CardModel_white-material" target="#CardModel_white-material">
+                <bind_vertex_input semantic="CardModel_side_002-mesh-map-0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Default"/>
+  </scene>
+</COLLADA>
