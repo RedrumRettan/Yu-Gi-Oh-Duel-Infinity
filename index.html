@@ -298,14 +298,21 @@
     </header>
 
     <nav class="menu" aria-label="Main menu">
-      <button type="button">Start Duel</button>
-      <button type="button">Deck Builder</button>
-      <button type="button" data-active="true">Collection</button>
-      <button type="button">Settings</button>
-      <button type="button">Credits</button>
+      <button type="button" data-screen="home" data-active="true">Start Duel</button>
+      <button type="button" data-screen="home">Deck Builder</button>
+      <button type="button" data-screen="collection">Collection</button>
+      <button type="button" data-screen="home">Settings</button>
+      <button type="button" data-screen="home">Credits</button>
     </nav>
 
-    <section class="screen" data-active="true" aria-label="Collection and customization">
+    <section id="screen-home" class="screen" data-screen="home" data-active="true" aria-label="Main home screen">
+      <section class="panel" aria-label="Home overview">
+        <h2>Welcome Duelist</h2>
+        <p class="hint">Use the Collection button to open the full customization screen for cards, card backs, and custom characters.</p>
+      </section>
+    </section>
+
+    <section id="screen-collection" class="screen" data-screen="collection" aria-label="Collection and customization">
       <p class="hint">Collection supports single image upload and ZIP mass upload. Default card front is loaded from <code>Unregistered_card</code>. Card backs are uploadable; default is <code>standard card backside.webp</code>.</p>
 
       <div class="card-tools">
@@ -385,6 +392,9 @@
     const charStatus = document.getElementById('charStatus');
     const characterList = document.getElementById('characterList');
 
+    const menuButtons = document.querySelectorAll('.menu button[data-screen]');
+    const screens = document.querySelectorAll('.screen[data-screen]');
+
     const frontUpload = document.getElementById('frontUpload');
     const zipUpload = document.getElementById('zipUpload');
     const backUpload = document.getElementById('backUpload');
@@ -408,6 +418,17 @@
     function setStatus(element, message, isError = false) {
       element.textContent = message;
       element.classList.toggle('error', isError);
+    }
+
+
+    function activateScreen(screenName) {
+      screens.forEach((screen) => {
+        screen.dataset.active = String(screen.dataset.screen === screenName);
+      });
+
+      menuButtons.forEach((button) => {
+        button.dataset.active = String(button.dataset.screen === screenName);
+      });
     }
 
     function createCardTile(src, label) {
@@ -634,8 +655,15 @@
       setStatus(charStatus, `Saved character "${name}".`);
     });
 
+    menuButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activateScreen(button.dataset.screen);
+      });
+    });
+
     loadDefaults();
     renderCharacters();
+    activateScreen('home');
   </script>
 </body>
 </html>
