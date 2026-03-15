@@ -3,155 +3,639 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Yu-Gi-Oh! Duel Infinity - Main Menu</title>
+  <title>Yu-Gi-Oh! Duel Infinity - Customization Hub</title>
   <style>
     :root {
       color-scheme: dark;
-      --menu-width: min(92vw, 420px);
-      --button-height: clamp(52px, 8.5vh, 68px);
-      --button-gap: clamp(10px, 1.8vh, 16px);
-      --panel-bg: rgba(6, 10, 26, 0.75);
-      --panel-border: rgba(157, 203, 255, 0.4);
-      --button-bg: linear-gradient(180deg, rgba(69, 125, 255, 0.9), rgba(17, 48, 142, 0.95));
-      --button-bg-hover: linear-gradient(180deg, rgba(121, 164, 255, 0.95), rgba(37, 77, 201, 0.98));
-      --button-shadow: 0 8px 20px rgba(9, 18, 54, 0.45);
-      --text-main: #eff6ff;
-      --text-subtle: #c6dafd;
+      --bg-0: #050816;
+      --bg-1: rgba(9, 16, 42, 0.86);
+      --panel: rgba(8, 14, 37, 0.78);
+      --line: rgba(160, 204, 255, 0.4);
+      --text: #edf4ff;
+      --muted: #bdd4ff;
+      --btn: linear-gradient(180deg, rgba(72, 130, 255, 0.95), rgba(28, 62, 166, 0.95));
+      --btn-hover: linear-gradient(180deg, rgba(108, 156, 255, 0.96), rgba(46, 86, 204, 0.98));
+      --danger: #ff7e8d;
+      --ok: #8ff0ba;
+      --menu-width: min(96vw, 1100px);
+      --radius: 16px;
+      --gap: clamp(10px, 2vh, 18px);
+      --card-ratio: 1.45;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html,
     body {
-      height: 100%;
       margin: 0;
-      font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
-      color: var(--text-main);
-      background: #050816;
-      overflow: hidden;
+      min-height: 100%;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg-0);
     }
 
     body {
       min-height: 100dvh;
+      padding: max(12px, env(safe-area-inset-top)) 12px max(14px, env(safe-area-inset-bottom));
+      background:
+        radial-gradient(circle at 20% 10%, rgba(75, 130, 255, 0.35), transparent 40%),
+        radial-gradient(circle at 80% 85%, rgba(124, 38, 255, 0.22), transparent 45%),
+        linear-gradient(rgba(4, 8, 24, 0.7), rgba(2, 5, 17, 0.8)),
+        url("skybox.jpg") center / cover fixed no-repeat;
       display: grid;
       place-items: center;
-      padding: max(12px, env(safe-area-inset-top)) 14px max(12px, env(safe-area-inset-bottom));
-      background:
-        radial-gradient(circle at 20% 15%, rgba(76, 134, 255, 0.45), transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(95, 19, 255, 0.25), transparent 50%),
-        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.65)),
-        url("skybox.jpg") center / cover no-repeat fixed;
     }
 
-    .menu-shell {
+    .app {
       width: var(--menu-width);
-      max-height: 100%;
-      border-radius: 22px;
-      border: 1px solid var(--panel-border);
-      background: var(--panel-bg);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--line);
+      background: var(--bg-1);
+      backdrop-filter: blur(9px);
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+      padding: clamp(12px, 2vh, 20px);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    .top {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: clamp(18px, 3vh, 30px);
-      gap: clamp(14px, 2vh, 20px);
+      gap: 8px;
     }
 
-    .game-logo {
-      width: min(68vw, 280px);
-      max-height: 20vh;
+    .logo {
+      width: min(80vw, 320px);
+      max-height: 22vh;
       object-fit: contain;
-      filter: brightness(0) invert(1) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.6));
+      filter: brightness(0) invert(1) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
     }
 
-    .menu-title {
+    h1 {
       margin: 0;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-      color: var(--text-subtle);
-    }
-
-    .main-menu {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: var(--button-gap);
-    }
-
-    .menu-button {
-      width: 100%;
-      min-height: var(--button-height);
-      border: 1px solid rgba(195, 223, 255, 0.4);
-      border-radius: 14px;
-      padding: 0 16px;
-      background: var(--button-bg);
-      color: var(--text-main);
-      font-size: clamp(1rem, 2.8vw, 1.15rem);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      box-shadow: var(--button-shadow);
-      transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
-    }
-
-    .menu-button:hover,
-    .menu-button:focus-visible {
-      background: var(--button-bg-hover);
-      transform: translateY(-2px);
-      filter: brightness(1.05);
-      outline: none;
-    }
-
-    .menu-button:active {
-      transform: translateY(1px) scale(0.99);
-    }
-
-    .menu-footer {
-      margin: 0;
-      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
-      color: rgba(222, 237, 255, 0.75);
+      letter-spacing: 0.08em;
+      color: var(--muted);
       text-align: center;
     }
 
-    @media (max-width: 360px), (max-height: 640px) {
-      :root {
-        --button-height: clamp(44px, 8vh, 52px);
-      }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
 
-      .menu-shell {
-        gap: 10px;
-        padding: 14px;
-      }
+    .menu button,
+    .action,
+    .upload-label {
+      border: 1px solid rgba(194, 222, 255, 0.45);
+      border-radius: 12px;
+      background: var(--btn);
+      color: var(--text);
+      min-height: 46px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: transform .14s ease, filter .14s ease, background .14s ease;
+    }
 
-      .menu-title {
-        font-size: 0.72rem;
-      }
+    .menu button:hover,
+    .menu button:focus-visible,
+    .action:hover,
+    .upload-label:hover {
+      background: var(--btn-hover);
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      outline: none;
+    }
 
-      .menu-button {
-        font-size: 0.95rem;
-      }
+    .menu button[data-active="true"] { outline: 2px solid rgba(167, 220, 255, 0.75); }
+
+    .screen {
+      display: none;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: clamp(10px, 1.6vh, 16px);
+      gap: var(--gap);
+    }
+
+    .screen[data-active="true"] {
+      display: grid;
+    }
+
+    .hint { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    .card-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .upload-label {
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    input[type="file"] { display: none; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px;
+      background: rgba(14, 24, 57, 0.65);
+      display: grid;
+      gap: 8px;
+    }
+
+    .thumb {
+      width: 100%;
+      aspect-ratio: 1 / var(--card-ratio);
+      border-radius: 9px;
+      border: 1px solid rgba(183, 213, 255, 0.35);
+      background: rgba(255, 255, 255, 0.03);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .thumb img,
+    .anim-preview img,
+    .anim-preview video {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card small { color: var(--muted); overflow-wrap: anywhere; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(12, 21, 50, 0.66);
+      display: grid;
+      gap: 10px;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label { font-size: .86rem; color: var(--muted); }
+
+    .field input[type="text"] {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(180, 214, 255, .44);
+      background: rgba(0, 0, 0, .22);
+      color: var(--text);
+      padding: 8px 10px;
+    }
+
+    .anim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .anim {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      background: rgba(0, 0, 0, .16);
+    }
+
+    .anim h3 { margin: 0; font-size: .85rem; color: var(--muted); }
+
+    .anim-preview {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(183, 213, 255, .3);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .character-list {
+      display: grid;
+      gap: 10px;
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .character-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      background: rgba(8, 16, 42, 0.85);
+      display: grid;
+      gap: 8px;
+    }
+
+    .character-card strong { color: var(--ok); }
+
+    .status {
+      margin: 0;
+      font-size: .88rem;
+      color: var(--ok);
+    }
+
+    .status.error { color: var(--danger); }
+
+    @media (max-width: 900px) {
+      .split { grid-template-columns: 1fr; }
+      .character-list { max-height: 260px; }
+    }
+
+    @media (max-width: 480px) {
+      .menu { grid-template-columns: 1fr; }
+      .card-tools { grid-template-columns: 1fr; }
+      .anim-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <main class="menu-shell" aria-label="Main menu">
-    <img class="game-logo" src="logo.png" alt="Yu-Gi-Oh Duel Infinity logo" />
-    <h1 class="menu-title">Main Menu</h1>
+  <main class="app">
+    <header class="top">
+      <img src="logo.png" alt="Yu-Gi-Oh Duel Infinity logo" class="logo" />
+      <h1>Fully Customizable Duel Setup</h1>
+    </header>
 
-    <nav class="main-menu" aria-label="Primary navigation">
-      <button class="menu-button" type="button">Start Duel</button>
-      <button class="menu-button" type="button">Deck Builder</button>
-      <button class="menu-button" type="button">Collection</button>
-      <button class="menu-button" type="button">Settings</button>
-      <button class="menu-button" type="button">Credits</button>
+    <nav class="menu" aria-label="Main menu">
+      <button type="button">Start Duel</button>
+      <button type="button">Deck Builder</button>
+      <button type="button" data-active="true">Collection</button>
+      <button type="button">Settings</button>
+      <button type="button">Credits</button>
     </nav>
 
-    <p class="menu-footer">Tap a mode to continue</p>
+    <section class="screen" data-active="true" aria-label="Collection and customization">
+      <p class="hint">Collection supports single image upload and ZIP mass upload. Default card front is loaded from <code>Unregistered_card</code>. Card backs are uploadable; default is <code>standard card backside.webp</code>.</p>
+
+      <div class="card-tools">
+        <label class="upload-label" for="frontUpload">Upload Card Fronts (images)</label>
+        <input id="frontUpload" type="file" accept="image/*" multiple />
+
+        <label class="upload-label" for="zipUpload">Mass Upload Fronts (ZIP)</label>
+        <input id="zipUpload" type="file" accept=".zip,application/zip" />
+
+        <label class="upload-label" for="backUpload">Upload Card Backs (images)</label>
+        <input id="backUpload" type="file" accept="image/*" multiple />
+
+        <button id="resetDefaults" class="action" type="button">Reload Default Assets</button>
+      </div>
+
+      <p id="cardStatus" class="status">Loaded defaults.</p>
+
+      <div>
+        <h2>Card Front Collection</h2>
+        <div id="frontGrid" class="grid" aria-live="polite"></div>
+      </div>
+
+      <div>
+        <h2>Card Back Collection</h2>
+        <div id="backGrid" class="grid" aria-live="polite"></div>
+      </div>
+
+      <div class="split">
+        <section class="panel" aria-label="Create your own character">
+          <h2>Create Your Own Character</h2>
+
+          <div class="field">
+            <label for="charName">Character Name</label>
+            <input id="charName" type="text" placeholder="Enter duelist name" maxlength="50" />
+          </div>
+
+          <div class="anim-grid">
+            <div class="anim">
+              <h3>Win Animation</h3>
+              <label class="upload-label" for="animWin">Upload</label>
+              <input id="animWin" type="file" accept="image/*,video/*" />
+              <div id="previewWin" class="anim-preview"></div>
+            </div>
+
+            <div class="anim">
+              <h3>Neutral Animation</h3>
+              <label class="upload-label" for="animNeutral">Upload</label>
+              <input id="animNeutral" type="file" accept="image/*,video/*" />
+              <div id="previewNeutral" class="anim-preview"></div>
+            </div>
+
+            <div class="anim">
+              <h3>Loss Animation</h3>
+              <label class="upload-label" for="animLoss">Upload</label>
+              <input id="animLoss" type="file" accept="image/*,video/*" />
+              <div id="previewLoss" class="anim-preview"></div>
+            </div>
+          </div>
+
+          <button id="saveCharacter" class="action" type="button">Save Character</button>
+          <p id="charStatus" class="status">Ready to create characters.</p>
+        </section>
+
+        <section class="panel" aria-label="Saved custom characters">
+          <h2>Saved Custom Characters</h2>
+          <div id="characterList" class="character-list"></div>
+        </section>
+      </div>
+    </section>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    const frontGrid = document.getElementById('frontGrid');
+    const backGrid = document.getElementById('backGrid');
+    const cardStatus = document.getElementById('cardStatus');
+    const charStatus = document.getElementById('charStatus');
+    const characterList = document.getElementById('characterList');
+
+    const frontUpload = document.getElementById('frontUpload');
+    const zipUpload = document.getElementById('zipUpload');
+    const backUpload = document.getElementById('backUpload');
+
+    const state = {
+      fronts: [],
+      backs: [],
+      characters: [],
+      pending: {
+        win: null,
+        neutral: null,
+        loss: null,
+      },
+    };
+
+    const DEFAULTS = {
+      front: 'Unregistered_card/D4t4_M1551ng.jpeg',
+      back: 'standard card backside.webp',
+    };
+
+    function setStatus(element, message, isError = false) {
+      element.textContent = message;
+      element.classList.toggle('error', isError);
+    }
+
+    function createCardTile(src, label) {
+      const card = document.createElement('article');
+      card.className = 'card';
+
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb';
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = label;
+
+      const text = document.createElement('small');
+      text.textContent = label;
+
+      thumb.append(img);
+      card.append(thumb, text);
+      return card;
+    }
+
+    function renderCards() {
+      frontGrid.innerHTML = '';
+      backGrid.innerHTML = '';
+      state.fronts.forEach((item) => frontGrid.append(createCardTile(item.src, item.label)));
+      state.backs.forEach((item) => backGrid.append(createCardTile(item.src, item.label)));
+    }
+
+    function addFilesToCollection(files, target) {
+      let added = 0;
+      Array.from(files).forEach((file) => {
+        if (!file.type.startsWith('image/')) return;
+        const src = URL.createObjectURL(file);
+        target.push({ src, label: file.name });
+        added += 1;
+      });
+      return added;
+    }
+
+    async function parseZip(file) {
+      if (!window.JSZip) {
+        setStatus(cardStatus, 'ZIP support failed to load (JSZip unavailable).', true);
+        return;
+      }
+      try {
+        const zip = await JSZip.loadAsync(file);
+        let added = 0;
+        const tasks = [];
+
+        zip.forEach((relativePath, entry) => {
+          if (entry.dir) return;
+          if (!/\.(png|jpe?g|webp|gif|bmp)$/i.test(relativePath)) return;
+          tasks.push(
+            entry.async('blob').then((blob) => {
+              const src = URL.createObjectURL(blob);
+              state.fronts.push({ src, label: `zip:${relativePath}` });
+              added += 1;
+            })
+          );
+        });
+
+        await Promise.all(tasks);
+        renderCards();
+        setStatus(cardStatus, `Imported ${added} card front image(s) from ZIP.`);
+      } catch (error) {
+        setStatus(cardStatus, `ZIP import failed: ${error.message}`, true);
+      }
+    }
+
+    function setAnimationPreview(slot, file) {
+      const container = document.getElementById(`preview${slot.charAt(0).toUpperCase() + slot.slice(1)}`);
+      container.innerHTML = '';
+      if (!file) return;
+
+      const src = URL.createObjectURL(file);
+      state.pending[slot] = { src, label: file.name, type: file.type };
+
+      const isVideo = file.type.startsWith('video/');
+      const node = document.createElement(isVideo ? 'video' : 'img');
+      node.src = src;
+      if (isVideo) {
+        node.muted = true;
+        node.loop = true;
+        node.autoplay = true;
+        node.playsInline = true;
+        node.controls = true;
+      } else {
+        node.alt = `${slot} animation preview`;
+      }
+      container.append(node);
+    }
+
+    function renderCharacters() {
+      characterList.innerHTML = '';
+      if (state.characters.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'hint';
+        empty.textContent = 'No custom characters yet.';
+        characterList.append(empty);
+        return;
+      }
+
+      state.characters.forEach((character) => {
+        const card = document.createElement('article');
+        card.className = 'character-card';
+
+        const title = document.createElement('strong');
+        title.textContent = character.name;
+
+        const animWrap = document.createElement('div');
+        animWrap.className = 'anim-grid';
+
+        ['win', 'neutral', 'loss'].forEach((slot) => {
+          const block = document.createElement('div');
+          block.className = 'anim';
+
+          const heading = document.createElement('h3');
+          heading.textContent = `${slot[0].toUpperCase()}${slot.slice(1)} Animation`;
+
+          const preview = document.createElement('div');
+          preview.className = 'anim-preview';
+          const asset = character.animations[slot];
+
+          const isVideo = asset.type.startsWith('video/');
+          const node = document.createElement(isVideo ? 'video' : 'img');
+          node.src = asset.src;
+          if (isVideo) {
+            node.muted = true;
+            node.loop = true;
+            node.autoplay = true;
+            node.playsInline = true;
+            node.controls = true;
+          } else {
+            node.alt = `${character.name} ${slot} animation`;
+          }
+
+          preview.append(node);
+          block.append(heading, preview);
+          animWrap.append(block);
+        });
+
+        card.append(title, animWrap);
+        characterList.append(card);
+      });
+    }
+
+    function loadDefaults() {
+      state.fronts = [{ src: DEFAULTS.front, label: 'Default: Unregistered card' }];
+      state.backs = [{ src: DEFAULTS.back, label: 'Default: Standard card backside' }];
+      renderCards();
+      setStatus(cardStatus, 'Loaded defaults from project assets.');
+    }
+
+    frontUpload.addEventListener('change', () => {
+      const added = addFilesToCollection(frontUpload.files, state.fronts);
+      renderCards();
+      setStatus(cardStatus, `Added ${added} front image(s).`);
+      frontUpload.value = '';
+    });
+
+    backUpload.addEventListener('change', () => {
+      const added = addFilesToCollection(backUpload.files, state.backs);
+      renderCards();
+      setStatus(cardStatus, `Added ${added} card back image(s).`);
+      backUpload.value = '';
+    });
+
+    zipUpload.addEventListener('change', async () => {
+      const file = zipUpload.files?.[0];
+      if (!file) return;
+      await parseZip(file);
+      zipUpload.value = '';
+    });
+
+    document.getElementById('resetDefaults').addEventListener('click', loadDefaults);
+
+    document.getElementById('animWin').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) setAnimationPreview('win', file);
+      e.target.value = '';
+    });
+
+    document.getElementById('animNeutral').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) setAnimationPreview('neutral', file);
+      e.target.value = '';
+    });
+
+    document.getElementById('animLoss').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) setAnimationPreview('loss', file);
+      e.target.value = '';
+    });
+
+    document.getElementById('saveCharacter').addEventListener('click', () => {
+      const name = document.getElementById('charName').value.trim();
+      if (!name) {
+        setStatus(charStatus, 'Character name is required.', true);
+        return;
+      }
+
+      const { win, neutral, loss } = state.pending;
+      if (!win || !neutral || !loss) {
+        setStatus(charStatus, 'Please upload all three animations (win, neutral, loss).', true);
+        return;
+      }
+
+      state.characters.push({
+        name,
+        animations: {
+          win,
+          neutral,
+          loss,
+        },
+      });
+
+      document.getElementById('charName').value = '';
+      ['Win', 'Neutral', 'Loss'].forEach((slot) => {
+        document.getElementById(`preview${slot}`).innerHTML = '';
+      });
+      state.pending = { win: null, neutral: null, loss: null };
+
+      renderCharacters();
+      setStatus(charStatus, `Saved character "${name}".`);
+    });
+
+    loadDefaults();
+    renderCharacters();
+  </script>
 </body>
 </html>
